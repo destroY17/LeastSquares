@@ -47,7 +47,7 @@ def solve_system(system: list) -> np.ndarray:
     return np.linalg.solve(coefficients, constant_terms)
 
 
-def approximating_polynomial(x: list, y: list, degree: int) -> np.poly1d:
+def approx_poly(x: list, y: list, degree: int) -> np.poly1d:
     """Approximation of the function by a polynomial
 
     :param x - list of objective function arguments
@@ -87,13 +87,15 @@ def discrepancy(target: list, solution: list) -> float:
     return result
 
 
-def read_data() -> tuple:
+def read_data(file_name) -> tuple:
     """Read data in the next format:
     x1 x2 ... xn
     y1 y2 ... yn
+
+    :param - the name of file with data
     """
 
-    with open("Data.txt", "r") as file:
+    with open(file_name, "r") as file:
         read_x = file.readline().split()
         read_y = file.readline().split()
         x = [float(x) for x in read_x]
@@ -109,17 +111,20 @@ def main():
 
     Calculation the discrepancy of the approximations
     """
-    x, y = read_data()
+    x, y = read_data("approx_data.txt")
 
-    polynomial2 = approximating_polynomial(x, y, 2)
-    polynomial3 = approximating_polynomial(x, y, 3)
+    polynomial2 = approx_poly(x, y, 2)
+    polynomial3 = approx_poly(x, y, 3)
 
     plt.plot(x, y, "ro")
     plt.plot(x, polynomial2(x))
     plt.plot(x, polynomial3(x))
     plt.show()
 
+    print("2nd degrees polynomial discrepancy:")
     print(discrepancy(y, polynomial2(x)))
+
+    print("3rd degrees polynomial discrepancy:")
     print(discrepancy(y, polynomial3(x)))
 
 
