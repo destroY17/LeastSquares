@@ -20,7 +20,7 @@ def get_deviation(y: list) -> float:
     :return - deviation (float)
     """
     avg = get_average(y)
-    return sum([i - avg for i in y])
+    return sum([(i - avg) ** 2 for i in y])
 
 
 def regression(x: list, y: list, accuracy=0.01):
